@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>
+    <span>{{ book.name }}</span></h1>
+<h2>
+    {% for author in authors %}
+        {{ author.fullname }}{% if authors|length > 1 and not forloop.last%}, {% endif %}
+    {% endfor %}
+</h2>
+<p>{{ book.synopsis|linebreaks }}</p>
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1><span>MyLibrary</span>Учебный проект<br>библиотеки</h1>
+
+<ul>
+    {% for genre in genres %}
+    <li>
+        <a href='{% url 'genre' genre.slug %}'>{{ genre.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

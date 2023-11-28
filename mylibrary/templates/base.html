@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <div class="app">
+        <header>
+            <a href="">
+              <img src="{% static 'img/logo.png' %}" alt="MyLibrary">
+            </a>
+        </header>
+        <nav>
+            {% for m in menu %}
+            <a href="{% url m.url %}">{{ m.title }}</a>
+            {% endfor %}
+        </nav>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+
+</body>
+</html>
