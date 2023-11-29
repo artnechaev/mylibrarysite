@@ -54,7 +54,7 @@ class Book(models.Model):
 
     name = models.CharField(max_length=100, verbose_name='Название')
     slug = models.SlugField(max_length=50, unique=True, db_index=True, verbose_name='URL')
-    synopsis = models.TextField(blank=True, null=True, verbose_name='Текст')
+    synopsis = models.TextField(blank=True, null=True, verbose_name='Описание')
     date_added = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления')
     date_updated = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     is_visible = models.BooleanField(default=True, verbose_name='Видимость')

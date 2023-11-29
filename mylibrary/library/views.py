@@ -1,11 +1,13 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template.response import TemplateResponse
 
+from .forms import AddBookForm
 from .models import Genre, Book
 
 menu = [
     {'title': 'Главная', 'url': 'index'},
+    {'title': 'Добавить книгу', 'url': 'add_book'},
     {'title': 'О сайте', 'url': 'about'},
     {'title': 'Войти', 'url': 'admin:index'},
 ]
@@ -57,3 +59,19 @@ def show_book(request, book_slug):
 
 def show_author(request, author_slug):
     return HttpResponse("<h1>author_slug</h1>")
+
+
+def add_book(request):
+    if request.method == 'POST':
+        form = AddBookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = AddBookForm()
+    context = {
+        'menu': menu,
+        'title': 'Добавление книги',
+        'form': form,
+    }
+    return render(request, 'library/addbook.html', context)
