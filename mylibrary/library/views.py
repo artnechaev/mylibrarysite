@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.response import TemplateResponse
+from django.views.generic import ListView
 
 from .forms import AddBookForm
 from .models import Genre, Book
@@ -13,14 +14,27 @@ menu = [
 ]
 
 
-def index(request):
-    genres = Genre.visible.all()
-    context = {
+# def index(request):
+#     genres = Genre.visible.all()
+#     context = {
+#         'menu': menu,
+#         'title': 'Главная',
+#         'genres': genres,
+#     }
+#     return render(request, 'library/index.html', context)
+
+
+class ShowGenres(ListView):
+    model = Genre
+    template_name = 'library/index.html'
+    context_object_name = 'genres'
+    extra_context = {
         'menu': menu,
         'title': 'Главная',
-        'genres': genres,
     }
-    return render(request, 'library/index.html', context)
+
+    def get_queryset(self):
+        return Genre.visible.all()
 
 
 def about(request):
@@ -31,16 +45,34 @@ def about(request):
     return TemplateResponse(request, 'library/about.html', context)
 
 
-def show_genre(request, genre_slug):
-    genre = get_object_or_404(Genre, slug=genre_slug)
-    books = genre.books.all()
-    context = {
-        'menu': menu,
-        'title': genre.name,
-        'genre': genre,
-        'books': books
-    }
-    return render(request, 'library/genre.html', context)
+# def show_genre(request, genre_slug):
+#     genre = get_object_or_404(Genre, slug=genre_slug)
+#     books = genre.books.all()
+#     context = {
+#         'menu': menu,
+#         'title': genre.name,
+#         'genre': genre,
+#         'books': books
+#     }
+#     return render(request, 'library/genre.html', context)
+
+
+class ShowGenre(ListView):
+    model = Book
+    template_name = 'library/genre.html'
+    context_object_name = 'books'
+    allow_empty = False
+
+    def get_queryset(self):
+        return Book.visible.filter(genre__slug=self.kwargs['genre_slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        genre = context['books'][0].genre
+        context['menu'] = menu
+        context['title'] = genre.name
+        context['genre'] = genre
+        return context
 
 
 def show_book(request, book_slug):
