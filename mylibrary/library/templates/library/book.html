@@ -5,10 +5,10 @@
     <span>{{ book.name }}</span></h1>
 <h2>
     {% for author in authors %}
-        {{ author.fullname }}{% if authors|length > 1 and not forloop.last%}, {% endif %}
+    {{ author.fullname }}{% if authors|length > 1 and not forloop.last%}, {% endif %}
     {% endfor %}
 </h2>
 <p>{{ book.synopsis|linebreaks }}</p>
-
+<p><b>Добавлена {{ book.date_added|date:"d.m.Y"}}</b></p>
 
 {% endblock %}
