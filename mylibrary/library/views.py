@@ -61,17 +61,20 @@ class ShowGenre(ListView):
     model = Book
     template_name = 'library/genre.html'
     context_object_name = 'books'
-    allow_empty = False
+    paginate_by = 3
 
     def get_queryset(self):
         return Book.visible.filter(genre__slug=self.kwargs['genre_slug'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        genre = context['books'][0].genre
-        context['menu'] = menu
+        if context['books']:
+            genre = context['books'][0].genre
+        else:
+            genre = Genre.visible.get(slug=self.kwargs['genre_slug'])
         context['title'] = genre.name
         context['genre'] = genre
+        context['menu'] = menu
         return context
 
 

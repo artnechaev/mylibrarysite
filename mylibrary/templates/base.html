@@ -9,23 +9,22 @@
 
 </head>
 <body>
-    <div class="app">
-        <header>
-            <a href="">
-              <img src="{% static 'img/logo.png' %}" alt="MyLibrary">
-            </a>
-        </header>
-        <nav>
-            {% for m in menu %}
-            <a href="{% url m.url %}">{{ m.title }}</a>
-            {% endfor %}
-        </nav>
-        <main>
-            {% block content %}
-            {% endblock %}
-        </main>
-    </div>
-
+<div class="app">
+    <header>
+        <a href="">
+            <img src="{% static 'img/logo.png' %}" alt="MyLibrary">
+        </a>
+    </header>
+    <nav>
+        {% for m in menu %}
+        <a href="{% url m.url %}">{{ m.title }}</a>
+        {% endfor %}
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
 
 </body>
 </html>
