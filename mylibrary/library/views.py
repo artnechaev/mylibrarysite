@@ -10,7 +10,6 @@ menu = [
     {'title': 'Главная', 'url': 'index'},
     {'title': 'Добавить книгу', 'url': 'add_book'},
     {'title': 'О сайте', 'url': 'about'},
-    {'title': 'Войти', 'url': 'admin:index'},
 ]
 
 
