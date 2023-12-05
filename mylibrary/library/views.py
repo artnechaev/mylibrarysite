@@ -29,7 +29,6 @@ class ShowGenres(ListView):
     template_name = 'library/index.html'
     context_object_name = 'genres'
     extra_context = {
-        'menu': menu,
         'title': 'Главная',
     }
 
@@ -39,7 +38,6 @@ class ShowGenres(ListView):
 
 def about(request):
     context = {
-        'menu': menu,
         'title': 'О сайте',
     }
     return TemplateResponse(request, 'library/about.html', context)
@@ -74,7 +72,6 @@ class ShowGenre(ListView):
             genre = Genre.visible.get(slug=self.kwargs['genre_slug'])
         context['title'] = genre.name
         context['genre'] = genre
-        context['menu'] = menu
         return context
 
 
@@ -83,7 +80,6 @@ def show_book(request, book_slug):
     genre = book.genre
     authors = book.author.all()
     context = {
-        'menu': menu,
         'title': book.name,
         'genre': genre,
         'book': book,
@@ -105,7 +101,6 @@ def add_book(request):
     else:
         form = AddBookForm()
     context = {
-        'menu': menu,
         'title': 'Добавление книги',
         'form': form,
     }
