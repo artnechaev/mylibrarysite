@@ -9,6 +9,6 @@
     {% endfor %}
 </h2>
 <p>{{ book.synopsis|linebreaks }}</p>
-<p><b>Добавлена {{ book.date_added|date:"d.m.Y"}}</b></p>
+<p><b>Добавлена {{ book.added_by.username }} {{ book.date_added|date:"d.m.Y"}}</b></p>
 
 {% endblock %}

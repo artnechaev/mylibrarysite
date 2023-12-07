@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
@@ -60,6 +61,8 @@ class Book(models.Model):
     is_visible = models.BooleanField(default=True, verbose_name='Видимость')
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name='books', verbose_name='Жанр')
     author = models.ManyToManyField(Author, related_name='books', verbose_name='Автор')
+    added_by = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='books',
+                                 verbose_name='Добавил', null=True, default=None)
 
     objects = models.Manager()
     visible = VisibleManager()
