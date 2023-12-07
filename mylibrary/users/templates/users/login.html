@@ -4,8 +4,10 @@
 <h1><span>Авторизация пользователя</span></h1>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <p><button type="submit">Войти</button></p>
+    <table>
+    {{ form.as_table }}
+    </table>
+    <button type="submit">Войти</button>
 </form>
 
 {% endblock %}

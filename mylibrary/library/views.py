@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.response import TemplateResponse
@@ -11,16 +12,6 @@ menu = [
     {'title': 'Добавить книгу', 'url': 'add_book'},
     {'title': 'О сайте', 'url': 'about'},
 ]
-
-
-# def index(request):
-#     genres = Genre.visible.all()
-#     context = {
-#         'menu': menu,
-#         'title': 'Главная',
-#         'genres': genres,
-#     }
-#     return render(request, 'library/index.html', context)
 
 
 class ShowGenres(ListView):
@@ -40,18 +31,6 @@ def about(request):
         'title': 'О сайте',
     }
     return TemplateResponse(request, 'library/about.html', context)
-
-
-# def show_genre(request, genre_slug):
-#     genre = get_object_or_404(Genre, slug=genre_slug)
-#     books = genre.books.all()
-#     context = {
-#         'menu': menu,
-#         'title': genre.name,
-#         'genre': genre,
-#         'books': books
-#     }
-#     return render(request, 'library/genre.html', context)
 
 
 class ShowGenre(ListView):
@@ -91,12 +70,16 @@ def show_author(request, author_slug):
     return HttpResponse("<h1>author_slug</h1>")
 
 
+@login_required
 def add_book(request):
     if request.method == 'POST':
         form = AddBookForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('index')
+            w = form.save(commit=True)
+            w.added_by = request.user
+            slug = w.slug
+            w.save()
+            return redirect('book', slug)
     else:
         form = AddBookForm()
     context = {

@@ -23,7 +23,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'slug', 'date_added', 'date_updated', 'genre', 'is_visible')
+    list_display = ('id', 'name', 'slug', 'date_added', 'date_updated', 'genre', 'is_visible', 'added_by')
     list_display_links = ('id', 'name')
     list_editable = ('is_visible',)
     list_filter = ('is_visible', 'date_added')
